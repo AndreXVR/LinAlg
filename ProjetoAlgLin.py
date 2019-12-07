@@ -102,29 +102,44 @@ def inversa(A):
 
 #IMPLEMENTACAO POLINOMIO
 
-def polinomio(A): '''calcula usando faddeev leverrier'''
-    n = len(A[0])
-    A = np.array(A)
+def formalizaNum(num):
+    if abs(num) < 0.0000001:
+        return 0
+    elif num/int(num) == 1:
+        return int(num)
+    else:
+        return round(num,2)
+
+def somaDiagP(A, valor):
+    m,n = np.shape(A)
+    for i in range(m):
+        A[i][i] = A[i][i] + valor
+
+    return A
+
+def stringPolinomio(coeficientes,i):
+    k = len(coeficientes)
+    if i < k-1:
+        polinomio = "+" + "(" + str(formalizaNum(coeficientes[i])) + ")" + chr(955) + "^" + str(k-1-i) + " " + stringPolinomio(coeficientes,i+1)
+    else:
+        polinomio = "+" + "(" + str(formalizaNum(coeficientes[i])) + ")"
+    return polinomio
+
+def polinomio(A):
+    m, n = np.shape(A)
+    if !matQuad(A):
+        return "Não é possivel encontrar polinomio caracteristico de matrizes não quadradas."
     coeficientes = np.array([1.])
-    A2 = np.array(A)
+    auxA = np.array(A)
     for i in range(1, n + 1):
-        coef = -A2.trace() / i
+        coef = -auxA.trace() / i
         coeficientes = np.append(coeficientes, coef)
-        A2 = subtraiDiagP(A2, coef)
-        A2 = np.dot(A, A2)
-    return coeficientes
-
-def subtraiDiagP(mat, num):
-    n_lin = len(mat)
-    for i in range(n_lin):
-        mat[i][i] = mat[i][i] + num
-
-    return mat '''retorna uma lista de autovalores, onde a posicao 0 é x^n, sendo n a ordem da matriz, a posicão 1, x^n-1 e assim por diante'''
+        auxA = somaDiagP(auxA, coef)
+        auxA = np.dot(A, auxA)
+        
+    return stringPolinomio(coeficientes,0)
 
 #IMPLEMENTACAO AUTOVALORES
-
-import numpy as np
-
 
 def fatorizacaoQR(A):
     produtoQR = np.array(A)
@@ -152,85 +167,85 @@ def fatorizacaoQR(A):
 
 
 def autovalores(A):
-    n = A.shape[0]
+    m, n = A.shape
+    if !matQuad(A):
+        return "Não é possivel encontrar autovalores de matrizes não quadradas."
     listAutovalor = []
-    for i in range(n):
+    for i in range(m):
         autovalor = A[i][i]
-        if (abs(autovalor) < 0.00000001):  # Faz com que autovalores aproximados de zero recebam 0
-            autovalor = 0
+        formalizaNum(autovalor)
         listAutovalor.append(autovalor)
     return listAutovalor
 
 #IMPLEMENTACAO AUTOVETORES
 
-import numpy as np
-
-
-def subtraiDiagP(mat, num):
-    n_lin = len(mat)
-    for i in range(n_lin):
-        mat[i][i] = mat[i][i] + num
-    return mat
-
-
-def matrizBs(mat):
-    n = len(mat[0])
-    mat = np.array(mat)
-    mat2 = np.array(mat)
-    matB = []
+def calcB(A):
+    m, n = np.shape(A)
+    auxA = A
+    B = []
     for i in range(1, n):
-        trac = -mat2.trace() / i
-        mat2 = subtraiDiagP(mat2, trac)
-        matB.append(mat2)
-        mat2 = np.dot(mat, mat2)
-    return matB
+        trace = -auxA.trace() / i 
+        auxA = somaDiagP(auxA, trace)
+        B.append(auxA)
+        auxA = np.dot(A, auxA) 
+    return B
 
-
-def colunaDeMat(mat, posCol):
-    n = len(mat)
+def kColuna(A, k):
+    m, n = np.shape(A)
     col = []
     for i in range(n):
-        a = []
-        a.append(mat[i][posCol])
-        col.append(a)
+        num = []
+        num.append(A[i][k])
+        col.append(num)
     return col
-
 
 def verifVet(vet):
     n = len(vet)
     for i in range(n):
-        if vet[i] != 0:
+        if abs(vet[i]) > 0.000001:
             return 1
     return 0
+    
+def diagonal(A):
+  m, n = np.shape(A)
+  for i in range(m):
+    for j in range(n):
+      if i != j:
+        if A[i][j] != 0:
+          return False
+  
+  return True
+  
 
-
-def autovetor(mat):
-    autv = np.linalg.eigvals(mat)
-    matB = matrizBs(mat)
-    tam_mat = len(mat)
-    id = np.identity(tam_mat, int)
-    qtd = len(autv)
-    qtd_matB = len(matB)
+def autovetores(A):
+    if !matQuad(A):
+        return "Não é possivel encontrar autovetores de matrizes não quadradas."
+    avals = np.linalg.eigvals(A)
+    B = calcB(A)
+    m, n = np.shape(A)
+    id = np.identity(m, int)
+    numAvals = len(avals)
+    numBs = len(B)
     cont = 0
-    col = 0
-    result = []
-    while cont != qtd:
-        u = np.array(colunaDeMat(id, col))
-        for j in range(qtd_matB):
-            u = ((autv[cont] * u) + np.array(colunaDeMat(matB[j], col)))
-        if verifVet(u) == 0:
-            col += 1
-            u = np.array(colunaDeMat(id, col))
-        else:
-            result.append(u)
-            cont += 1
-            col = 0
-    return result
-
-
-mat = [[2, -2, 3], [0, 3, -2], [0, -1, 2]]
-m = autovetor(mat)
-print(m)'''
+    k = 0
+    listAutovetores = []
+    if diagonal(A):
+      for i in range(m):
+        listAutovetores.append(id[i][:])
+    else:
+      while cont != numAvals:
+          u = np.array(kColuna(id, k))
+          for j in range(numBs):
+              u = ((avals[cont]*u) + np.array(kColuna(B[j], k)))
+          if verifVet(u) == 0:
+              k+=1
+              u = np.array(kColuna(id, k))
+          else:
+              listAutovetores.append(u)
+              cont+=1
+              k = 0
+    
+    return listAutovetores
 
 
 
