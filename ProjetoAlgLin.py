@@ -1,94 +1,104 @@
 import numpy as np
 
-def le_mat(m, n):
-    mat = []
+#INPUT DA MATRIZ
+def converteString(string):
+  list = string.split(" ")
+  list = [int(x) for x in list]
+  return list
+  
+def inputMatriz(m, n):
+    A = [] 
     for i in range(m):
-        mat.append([])
-        for j in range(n):
-            print("Valor na pos ", i + 1, ",", j + 1)
-            num = float(input())
-            mat[i].append(num)
-    return mat
+        lin = input()
+        lin = converteString(lin)
+        A.append(lin)
+    
+    A = np.array(A)
+    if np.shape(A) != (m,n):
+      return "Dimensoes da matriz invalidas."
+    else:
+      return A
 
+def matQuad(A):
+    m, n = np.shape(A)
+    return m == n
 
-def mat_escalar(escalar, mat):
-    mat_prod = []
-    n_lin = len(mat)
-    n_col = len(mat[0])
-    for i in range(n_lin):
-        mat_prod.append([])
-        for j in range(n_col):
-            mat_prod[i].append(mat[i][j]*escalar)
-    return mat_prod
+#IMPLEMENTACAO DO TRAÇO
 
+def trace(A):
+    m, n = np.shape(A)
 
-def mat_menor(mat, lin, col):  # Recebe uma matriz A e uma posiçao da matriz, retorna a determinante da matriz formada por A menos a linha i e a coluna j.
-    menor = []  # cria uma matriz
-    n_lin = len(mat)  # diz a quantidade de linhas
-    n_col = n_lin  # Quantidade de colunas
+    if !matQuad(A):
+        return "Não é possivel encontrar traço de matrizes não quadradas."
+    
+    for i in range(m):
+        soma = soma + A[i][i]
 
-    for i in range(n_lin):
-        list_lin = []
+    return soma
 
-        for j in range(n_col):
-            if j != col:
-                list_lin.append(mat[i][j])
+#IMPLEMENTACAO DA DETERMINANTE
+def subMatriz(A, lin, col):
+    m, n = np.shape(A)
+    submatriz = []
 
+    for i in range(m):
+        sm_lin = []
         if i != lin:
-            menor.append(list_lin)
+            for j in range(n):
+                if j != col:
+                    sm_lin.append(A[i][j])
 
-    return menor
+            submatriz.append(sm_lin)
+    submatriz = np.array(submatriz)
+    return submatriz 
 
-
-def mat_det(mat):  # Recebe uma matriz A e uma posiçao da matriz, retorna a determinante da matriz formada por A menos a linha i e a coluna j.
-    det_val= 0.0
+def determinante(A):  
+    det = 0.0
     list_cofat = []
-    n_lin = len(mat)
-    n_col = n_lin
+    m, n = np.shape(A)
+    if !matQuad(A):
+        return "Não é possivel encontrar determinante de matrizes não quadradas."
+
     i = 0
 
-    if n_lin == 2:
-        return (mat[0][0]*mat[1][1]) - (mat[0][1]*mat[1][0])
+    if m == 2:
+        return (A[0][0]*A[1][1]) - (A[0][1]*A[1][0])
 
-    elif n_lin == 1:
-        return mat[0][0]
+    elif m == 1:
+        return A[0][0]
 
     else:
-        for j in range(n_col):
-            list_cofat.append(((-1)**((i+1)+(j+1))) * mat_det(mat_menor(mat, i, j)))
-            det_val = (list_cofat[j] * mat[i][j]) + det_val
+        for j in range(n):
+            list_cofat.append(((-1)**((i+1)+(j+1))) * determinante(subMatriz(A, i, j)))
+            det = (list_cofat[j] * A[i][j]) + det
 
-    return det_val
+    return det
 
+#IMPLEMENTACAO DA TRANSPOSTA
+def transposta(A):
+    m, n = np.shape(A)
+    tA= np.zeros((n,m),int)
+    for i in range(m):
+        for j in range(n):
+            tA[j][i] = A[i][j]
+    return tA
 
-def mat_transposta(mat):
-    transposta=[]
-    n_lin= len(mat)
-    n_col= len(mat[0])
-    for i in range(n_col):
-        transposta.append([])
-        for j in range(n_lin):
-            transposta[i].append(mat[j][i])
-    return transposta
+#IMPLEMENTACAO DA INVERSA
+def matrizCof(A):
+    m, n = np.shape(A)
+    cA = np.zeros((m,n),int)
+    for i in range(m):
+        for j in range(n):
+            cA[i][j] = ((-1)**((i+1)+(j+1))) * np.det(subMatriz(A, i, j))
 
-
-def mat_cofatores(mat):
-    comat = []
-    n_lin = len(mat)
-    n_col = n_lin
-
-    for i in range(n_lin):
-        comat.append([])
-
-        for j in range(n_col):
-            comat[i].append(((-1)**((i+1)+(j+1))) * mat_det(mat_menor(mat, i, j)))
-
-    return comat
+    return cA
 
 
-def mat_inversa(mat):
-    inversa = mat_escalar(1/mat_det(mat), mat_transposta(mat_cofatores(mat)))
-    return inversa
+def inversa(A):
+    if !matQuad(A):
+        return "Não é possivel encontrar a inversa de matrizes não quadradas."
+    invA = 1/np.det(A) * transposta(matrizCof(A)))
+    return invA
 
 #IMPLEMENTACAO POLINOMIO
 
