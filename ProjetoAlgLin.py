@@ -6,7 +6,7 @@ def converteString(string):
   list = [int(x) for x in list]
   return list
   
-def inputMatriz(m, n):
+def inputMatriz(string):
     A = [] 
     for i in range(m):
         lin = input()
@@ -28,7 +28,7 @@ def matQuad(A):
 def trace(A):
     m, n = np.shape(A)
 
-    if !matQuad(A):
+    if not matQuad(A):
         return "Não é possivel encontrar traço de matrizes não quadradas."
     
     for i in range(m):
@@ -56,7 +56,7 @@ def determinante(A):
     det = 0.0
     list_cofat = []
     m, n = np.shape(A)
-    if !matQuad(A):
+    if not matQuad(A):
         return "Não é possivel encontrar determinante de matrizes não quadradas."
 
     i = 0
@@ -84,6 +84,7 @@ def transposta(A):
     return tA
 
 #IMPLEMENTACAO DA INVERSA
+
 def matrizCof(A):
     m, n = np.shape(A)
     cA = np.zeros((m,n),int)
@@ -95,10 +96,11 @@ def matrizCof(A):
 
 
 def inversa(A):
-    if !matQuad(A):
+    if not matQuad(A):
         return "Não é possivel encontrar a inversa de matrizes não quadradas."
-    invA = 1/np.det(A) * transposta(matrizCof(A)))
-    return invA
+    else:
+        invA = 1/np.det(A) * transposta(matrizCof(A))
+        return invA
 
 #IMPLEMENTACAO POLINOMIO
 
@@ -126,8 +128,8 @@ def stringPolinomio(coeficientes,i):
     return polinomio
 
 def polinomio(A):
-    m, n = np.shape(A)
-    if !matQuad(A):
+    n = np.shape(A)[1]
+    if not matQuad(A):
         return "Não é possivel encontrar polinomio caracteristico de matrizes não quadradas."
     coeficientes = np.array([1.])
     auxA = np.array(A)
@@ -168,7 +170,7 @@ def fatorizacaoQR(A):
 
 def autovalores(A):
     m, n = A.shape
-    if !matQuad(A):
+    if not matQuad(A):
         return "Não é possivel encontrar autovalores de matrizes não quadradas."
     listAutovalor = []
     for i in range(m):
@@ -218,7 +220,7 @@ def diagonal(A):
   
 
 def autovetores(A):
-    if !matQuad(A):
+    if not matQuad(A):
         return "Não é possivel encontrar autovetores de matrizes não quadradas."
     avals = np.linalg.eigvals(A)
     B = calcB(A)
@@ -271,7 +273,7 @@ edmatriz.grid(row=2, column = 0)
 lbaux2 = Label(window, font="arial 1 bold", bg = "black")
 lbaux2.grid(row = 3, column = 0)
 bt = Button(window,width=19,text="Determinante", relief=GROOVE,font=" arial 12", bg =
-"orange", activebackground="green", fg="white", command = determinante)
+"orange", activebackground="green", fg="white", command = )
 bt.grid(row=4,column = 0)
 lbaux3 = Label(window, font="arial 1 bold", bg = "black")
 lbaux3.grid(row = 5, column = 0)
