@@ -256,22 +256,20 @@ from tkinter import *
 def determinante():
     A = array(eval(edmatriz.get()))
     d = linalg.det(A)
-    Label = str(round(d,2))
+    saida["text"] = str(round(d,2))
 
 
 window = Tk()
 window["bg"] = "black"
 window.title("Operações com Matrizes")
-window.geometry("1300x500+0+0")
+window.geometry("1350x500+0+0")
 lb2 = Label(window, text="Insira a matriz em python",
 font="arial 20 bold", width=45, bg="orange", fg="white")
 lb2.grid(row = 0, column = 0)
 lbaux = Label(window, font="arial 1 ", bg = "black")
 lbaux.grid(row = 1, column = 0)
 edmatriz = Entry(window, width = 30)
-edmatriz.insert(INSERT, "[[0,0,0],"
-"[0,0,0],"
-"[0,0,0]]")
+edmatriz.insert(INSERT,"")
 edmatriz.grid(row=2, column = 0)
 
 lbaux2 = Label(window, font="arial 1 bold", bg = "black")
@@ -284,7 +282,7 @@ lbaux3.grid(row = 5, column = 0)
 bt2 = Button(window,width=19,text="Traço", relief=GROOVE, font=" arial 12", bg = 
 "orange", activebackground="green", fg="white")
 #bt2.grid(row=12,column=0)
-bt2.place(x=450,y=85)
+bt2.place(x=450,y=103)
 lbaux4 = Label(window, font="arial 1 bold", bg = "black")
 lbaux4.grid(row = 7, column = 0)
 bt3 = Button(window,width=19,text="Transposta", relief=GROOVE, font=" arial 12", bg =
@@ -295,7 +293,7 @@ lbaux5.grid(row = 9, column = 0)
 bt4 = Button(window,width=19,text="Inversa", relief=GROOVE, font=" arial 12", bg =
 "orange", activebackground="green", fg="white")
 #bt4.grid(row=14,column=0)
-bt4.place(x=450,y=121)
+bt4.place(x=450,y=139)
 lbaux6 = Label(window, font="arial 1 bold", bg = "black")
 lbaux6.grid(row = 11, column = 0)
 bt5 = Button(window,width=19,text="Polinômio Característico", relief=GROOVE, font=" arial 12",
@@ -306,7 +304,7 @@ lbaux7.grid(row = 13, column = 0)
 bt6 = Button(window,width=19,text="Autovalores", relief=GROOVE, font=" arial 12", bg =
 "orange", activebackground="green", fg="white")
 #bt6.grid(row=16,column=0)
-bt6.place(x=450,y=157)
+bt6.place(x=450,y=175)
 lbaux8 = Label(window, font="arial 1 bold", bg = "black")
 lbaux8.grid(row = 15, column = 0)
 bt7 = Button(window,width=19,text="Autovetores", relief=GROOVE, font=" arial 12", bg =
@@ -317,7 +315,7 @@ lbaux9.grid(row = 17, column = 0)
 bt8 = Button(window,width=19,text="Matriz Diagonal", relief=GROOVE, font=" arial 12", bg =
 "orange", activebackground="green", fg="white")
 #bt8.grid(row=18,column=0)
-bt8.place(x=450,y=193)
+bt8.place(x=450,y=211)
 lbaux10 = Label(window, font="arial 1 bold", bg = "black")
 lbaux10.grid(row = 19, column = 0)
 
@@ -326,9 +324,9 @@ fg="white")
 lb2_0.grid(row = 0, column = 2)
 lbaux13 = Label(window, font="arial 1 ", bg = "black")
 lbaux13.grid(row = 1, column = 2)
-ed2 = Entry(window, width = 30)
-ed2.insert(INSERT, "Resultado da Operação: ")
-ed2.grid(row=3, column = 2)
+#ed2 = Entry(window, width = 30)
+#ed2.insert(INSERT, "Resultado da Operação: ")
+#ed2.grid(row=3, column = 2)
 #lbaux14 = Label(window, font="arial 1 ", bg = "black")
 #lbaux14.grid(row = 3, column = 2)
 #lbaux15 = Label(window, font="arial 12 bold", width=24, bg="orange", fg="white",
@@ -338,6 +336,8 @@ ed2.grid(row=3, column = 2)
 #lbaux16.grid(row = 5, column = 2)
 #lbaux17 = Label(window, font="arial 12 bold ", bg = "white",fg="white", width=40)
 #lbaux17.grid(row = 6, column = 2)
+saida = Label(font="Times 20 bold", width=40, bg = "white", fg = "black")
+saida.grid(row=3,column=2)
 
 window.maxsize(width=1520, height=800)
 window.mainloop()
