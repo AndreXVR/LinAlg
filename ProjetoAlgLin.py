@@ -258,6 +258,27 @@ def determinante():
     d = linalg.det(A)
     saida["text"] = str(round(d,2))
 
+def trace():
+    A = array(eval(edmatriz.get()))
+    n = len(A)
+    saida["text"] = trace()
+
+def polinomioCarac():
+    A = array(eval(edmatriz.get()))
+    n = len(A)
+    poli = polinomio(A)
+    saida["text"] = poli
+
+def inversa():
+    a = array(eval(edmatriz.get()))
+    t = linalg.inv(a)
+    saida["text"] = t
+
+def transposta():
+    A = array(eval(edmatriz.get()))
+    n = len(A)
+    transposta(A)
+    saida["text"] = conveteString(A,n)
 
 window = Tk()
 window["bg"] = "black"
@@ -266,41 +287,44 @@ window.geometry("1350x500+0+0")
 lb2 = Label(window, text="Insira a matriz em python",
 font="arial 20 bold", width=45, bg="orange", fg="white")
 lb2.grid(row = 0, column = 0)
-lbaux = Label(window, font="arial 1 ", bg = "black")
-lbaux.grid(row = 1, column = 0)
+#lbaux = Label(window, font="arial 1 ", bg = "black")
+#lbaux.grid(row = 1, column = 0)
 edmatriz = Entry(window, width = 30)
 edmatriz.insert(INSERT,"")
 edmatriz.grid(row=2, column = 0)
 
-lbaux2 = Label(window, font="arial 1 bold", bg = "black")
-lbaux2.grid(row = 3, column = 0)
+#lbaux2 = Label(window, font="arial 1 bold", bg = "black")
+#lbaux2.grid(row = 3, column = 0)
 bt = Button(window,width=19,text="Determinante", relief=GROOVE,font=" arial 12", bg =
 "orange", activebackground="green", fg="white", command = determinante)
-bt.grid(row=4,column = 0)
-lbaux3 = Label(window, font="arial 1 bold", bg = "black")
-lbaux3.grid(row = 5, column = 0)
+#bt.grid(row=4,column = 0)
+bt.place(x=250,y=103)
+#lbaux3 = Label(window, font="arial 1 bold", bg = "black")
+#lbaux3.grid(row = 5, column = 0)
 bt2 = Button(window,width=19,text="Traço", relief=GROOVE, font=" arial 12", bg = 
-"orange", activebackground="green", fg="white")
+"orange", activebackground="green", fg="white", command = trace)
 #bt2.grid(row=12,column=0)
 bt2.place(x=450,y=103)
-lbaux4 = Label(window, font="arial 1 bold", bg = "black")
-lbaux4.grid(row = 7, column = 0)
+#lbaux4 = Label(window, font="arial 1 bold", bg = "black")
+#lbaux4.grid(row = 7, column = 0)
 bt3 = Button(window,width=19,text="Transposta", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white")
-bt3.grid(row=6,column = 0)
-lbaux5 = Label(window, font="arial 1 bold", bg = "black")
-lbaux5.grid(row = 9, column = 0)
+"orange", activebackground="green", fg="white", command=transposta)
+#bt3.grid(row=6,column = 0)
+bt3.place(x=250,y=140)
+#lbaux5 = Label(window, font="arial 1 bold", bg = "black")
+#lbaux5.grid(row = 9, column = 0)
 bt4 = Button(window,width=19,text="Inversa", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white")
+"orange", activebackground="green", fg="white", command=inversa)
 #bt4.grid(row=14,column=0)
 bt4.place(x=450,y=139)
-lbaux6 = Label(window, font="arial 1 bold", bg = "black")
-lbaux6.grid(row = 11, column = 0)
+#lbaux6 = Label(window, font="arial 1 bold", bg = "black")
+#lbaux6.grid(row = 11, column = 0)
 bt5 = Button(window,width=19,text="Polinômio Característico", relief=GROOVE, font=" arial 12",
-bg = "orange", activebackground="green", fg="white")
-bt5.grid(row=8,column = 0)
-lbaux7 = Label(window, font="arial 1 bold", bg = "black")
-lbaux7.grid(row = 13, column = 0)
+bg = "orange", activebackground="green", fg="white", command=polinomioCarac)
+#bt5.grid(row=8,column = 0)
+bt5.place(x=250,y=175)
+#lbaux7 = Label(window, font="arial 1 bold", bg = "black")
+#lbaux7.grid(row = 13, column = 0)
 bt6 = Button(window,width=19,text="Autovalores", relief=GROOVE, font=" arial 12", bg =
 "orange", activebackground="green", fg="white")
 #bt6.grid(row=16,column=0)
@@ -310,6 +334,7 @@ lbaux8.grid(row = 15, column = 0)
 bt7 = Button(window,width=19,text="Autovetores", relief=GROOVE, font=" arial 12", bg =
 "orange", activebackground="green", fg="white")
 bt7.grid(row=10,column = 0)
+bt7.place(x=250,y=208)
 lbaux9 = Label(window, font="arial 1 bold", bg = "black")
 lbaux9.grid(row = 17, column = 0)
 bt8 = Button(window,width=19,text="Matriz Diagonal", relief=GROOVE, font=" arial 12", bg =
@@ -336,7 +361,7 @@ lbaux13.grid(row = 1, column = 2)
 #lbaux16.grid(row = 5, column = 2)
 #lbaux17 = Label(window, font="arial 12 bold ", bg = "white",fg="white", width=40)
 #lbaux17.grid(row = 6, column = 2)
-saida = Label(font="Times 20 bold", width=40, bg = "white", fg = "black")
+saida = Label(font="Times 20 bold", width=40, bg = "black", fg = "white")
 saida.grid(row=3,column=2)
 
 window.maxsize(width=1520, height=800)
