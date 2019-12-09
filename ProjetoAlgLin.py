@@ -253,12 +253,6 @@ from Funcoes import *
 from functools import partial
 from tkinter import *
 
-def determinante():
-    A = array(eval(edmatriz.get()))
-    d = linalg.det(A)
-    Label = str(round(d,2))
-
-
 window = Tk()
 window["bg"] = "black"
 window.title("Operações com Matrizes")
