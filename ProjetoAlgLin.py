@@ -249,8 +249,17 @@ def autovetores(A):
   
   #Codigo Interface
 
+from numpy import *
+from Funcoes import *
 from functools import partial
 from tkinter import *
+
+def determinante():
+    A = array(eval(edmatriz.get()))
+    d = linalg.det(A)
+    Label = str(round(d,2))
+
+
 window = Tk()
 window["bg"] = "black"
 window.title("Operações com Matrizes")
@@ -260,79 +269,68 @@ font="arial 20 bold", width=45, bg="orange", fg="white")
 lb2.grid(row = 0, column = 0)
 lbaux = Label(window, font="arial 1 ", bg = "black")
 lbaux.grid(row = 1, column = 0)
-ed = Text(window, height = 14, width = 30)
-ed.insert(INSERT, "[[0,0,0],\n"
-"[0,0,0],\n"
+edmatriz = Entry(window, width = 30)
+edmatriz.insert(INSERT, "[[0,0,0],"
+"[0,0,0],"
 "[0,0,0]]")
-ed.grid(row=2, column = 0)
-conteudo = ed.get(1.0, END)
+edmatriz.grid(row=2, column = 0)
+#conteudo = edmatriz.get(1.0, END)
 lbaux2 = Label(window, font="arial 1 bold", bg = "black")
 lbaux2.grid(row = 3, column = 0)
-
-#DETERMINANRTE
 bt = Button(window,width=19,text="Determinante", relief=GROOVE,font=" arial 12", bg =
-"orange", activebackground="green", fg="white")
+"orange", activebackground="green", fg="white", command = determinante)
 bt.grid(row=4,column = 0)
 lbaux3 = Label(window, font="arial 1 bold", bg = "black")
 lbaux3.grid(row = 5, column = 0)
-
-#TRACO
 bt2 = Button(window,width=19,text="Traço", relief=GROOVE, font=" arial 12", bg = 
 "orange", activebackground="green", fg="white")
-bt2.place(x=450,y=260)
+bt2.grid(row=12,column=0)
+#bt2.place(x=450,y=260)
 lbaux4 = Label(window, font="arial 1 bold", bg = "black")
 lbaux4.grid(row = 7, column = 0)
-
-#TRANSPOSTA
 bt3 = Button(window,width=19,text="Transposta", relief=GROOVE, font=" arial 12", bg =
 "orange", activebackground="green", fg="white")
 bt3.grid(row=6,column = 0)
 lbaux5 = Label(window, font="arial 1 bold", bg = "black")
 lbaux5.grid(row = 9, column = 0)
-
-#INVERSA
 bt4 = Button(window,width=19,text="Inversa", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white")
-bt4.place(x=450,y=296)
+"orange", activebackground="green", fg="white", command = inversa)
+bt4.grid(row=14,column=0)
+#bt4.place(x=450,y=296)
 lbaux6 = Label(window, font="arial 1 bold", bg = "black")
 lbaux6.grid(row = 11, column = 0)
-
-#POLINOMIO CARACTERISTICO
 bt5 = Button(window,width=19,text="Polinômio Característico", relief=GROOVE, font=" arial 12",
 bg = "orange", activebackground="green", fg="white")
 bt5.grid(row=8,column = 0)
 lbaux7 = Label(window, font="arial 1 bold", bg = "black")
 lbaux7.grid(row = 13, column = 0)
-
-#AUTOVALORES
 bt6 = Button(window,width=19,text="Autovalores", relief=GROOVE, font=" arial 12", bg =
 "orange", activebackground="green", fg="white")
-bt6.place(x=450,y=332)
+bt6.grid(row=16,column=0)
+#bt6.place(x=450,y=332)
 lbaux8 = Label(window, font="arial 1 bold", bg = "black")
 lbaux8.grid(row = 15, column = 0)
-
-#AUTOVETORES
 bt7 = Button(window,width=19,text="Autovetores", relief=GROOVE, font=" arial 12", bg =
 "orange", activebackground="green", fg="white")
 bt7.grid(row=10,column = 0)
 lbaux9 = Label(window, font="arial 1 bold", bg = "black")
 lbaux9.grid(row = 17, column = 0)
-
-#MATRIZ DIAGONAL
 bt8 = Button(window,width=19,text="Matriz Diagonal", relief=GROOVE, font=" arial 12", bg =
 "orange", activebackground="green", fg="white")
-bt8.place(x=450,y=368)
+bt8.grid(row=18,column=0)
+#bt8.place(x=450,y=368)
 lbaux10 = Label(window, font="arial 1 bold", bg = "black")
 lbaux10.grid(row = 19, column = 0)
-lb2_0 = Label(window, text="RESULTADOS", font="arial 20 bold", width=45, bg="orange",
+
+lb2_0 = Label(window, text="RESULT", font="arial 20 bold", width=45, bg="orange",
 fg="white")
 lb2_0.grid(row = 0, column = 2)
 lbaux13 = Label(window, font="arial 1 ", bg = "black")
 lbaux13.grid(row = 1, column = 2)
-ed2 = Text(window, height = 15, width = 30)
+ed2 = Entry(window, width = 30)
 ed2.insert(INSERT, "Resultado da Operação: ")
 ed2.grid(row=2, column = 2)
-conteudo2 = ed.get(1.0, END)
+#conteudo2 = edmatriz.get(1.0, END)
 lbaux14 = Label(window, font="arial 1 ", bg = "black")
 lbaux14.grid(row = 3, column = 2)
 lbaux15 = Label(window, font="arial 12 bold", width=24, bg="orange", fg="white",
@@ -342,7 +340,6 @@ lbaux16 = Label(window, font="arial 1 ", bg = "black")
 lbaux16.grid(row = 5, column = 2)
 lbaux17 = Label(window, font="arial 12 bold ", bg = "white",fg="white", width=40)
 lbaux17.grid(row = 6, column = 2)
+
 window.maxsize(width=1520, height=800)
 window.mainloop()
-
-
