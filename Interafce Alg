@@ -43,11 +43,20 @@ def btnPolinomio():
 
 def btnAutovalores():
     A = np.array(eval(edmatriz.get()))
-    retorno = inversa(A)
+    retorno = autovalores(A)
     if isinstance(retorno,str):
         saida["text"] = retorno
     else:
         saida["text"] = str(retorno)
+
+def btnAutovetores():
+    A = np.array(eval(edmatriz.get()))
+    retorno = autovetores(A)
+    if isinstance(retorno,str):
+        saida["text"] = retorno
+    else:
+        saida["text"] = str(retorno)
+        
 
 window = Tk()
 window["bg"] = "black"
@@ -65,49 +74,49 @@ edmatriz.grid(row=2, column = 0)
 #lbaux2 = Label(window, font="arial 1 bold", bg = "black")
 #lbaux2.grid(row = 3, column = 0)
 bt = Button(window,width=19,text="Determinante", relief=GROOVE,font=" arial 12", bg =
-"orange", activebackground="green", fg="white", command = determinante)
+"orange", activebackground="green", fg="white", command = btnDeterminante)
 #bt.grid(row=4,column = 0)
 bt.place(x=250,y=103)
 #lbaux3 = Label(window, font="arial 1 bold", bg = "black")
 #lbaux3.grid(row = 5, column = 0)
 bt2 = Button(window,width=19,text="Traço", relief=GROOVE, font=" arial 12", bg = 
-"orange", activebackground="green", fg="white", command = trace)
+"orange", activebackground="green", fg="white", command = btnTrace)
 #bt2.grid(row=12,column=0)
 bt2.place(x=450,y=103)
 #lbaux4 = Label(window, font="arial 1 bold", bg = "black")
 #lbaux4.grid(row = 7, column = 0)
 bt3 = Button(window,width=19,text="Transposta", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white", command=transposta)
+"orange", activebackground="green", fg="white", command = btnTransposta)
 #bt3.grid(row=6,column = 0)
 bt3.place(x=250,y=140)
 #lbaux5 = Label(window, font="arial 1 bold", bg = "black")
 #lbaux5.grid(row = 9, column = 0)
 bt4 = Button(window,width=19,text="Inversa", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white", command=inversa)
+"orange", activebackground="green", fg="white", command = btnInversa)
 #bt4.grid(row=14,column=0)
 bt4.place(x=450,y=139)
 #lbaux6 = Label(window, font="arial 1 bold", bg = "black")
 #lbaux6.grid(row = 11, column = 0)
 bt5 = Button(window,width=19,text="Polinômio Característico", relief=GROOVE, font=" arial 12",
-bg = "orange", activebackground="green", fg="white", command=polinomioCarac)
+bg = "orange", activebackground="green", fg="white", command = btnPolinomio)
 #bt5.grid(row=8,column = 0)
 bt5.place(x=250,y=175)
 #lbaux7 = Label(window, font="arial 1 bold", bg = "black")
 #lbaux7.grid(row = 13, column = 0)
 bt6 = Button(window,width=19,text="Autovalores", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white")
+"orange", activebackground="green", fg="white", command = btnAutovalores)
 #bt6.grid(row=16,column=0)
 bt6.place(x=450,y=175)
 lbaux8 = Label(window, font="arial 1 bold", bg = "black")
 lbaux8.grid(row = 15, column = 0)
 bt7 = Button(window,width=19,text="Autovetores", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white")
+"orange", activebackground="green", fg="white", command = btnAutovetores)
 bt7.grid(row=10,column = 0)
 bt7.place(x=250,y=208)
 lbaux9 = Label(window, font="arial 1 bold", bg = "black")
 lbaux9.grid(row = 17, column = 0)
 bt8 = Button(window,width=19,text="Matriz Diagonal", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white")
+"orange", activebackground="green", fg="white", command = btnPolinomio)
 #bt8.grid(row=18,column=0)
 bt8.place(x=450,y=211)
 lbaux10 = Label(window, font="arial 1 bold", bg = "black")
