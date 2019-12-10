@@ -1,6 +1,32 @@
 import numpy as np
 
 #INPUT DA MATRIZ
+
+def formalizaNum(num):
+    if abs(num) < 0.0000001:
+        return 0
+    elif num/int(num) == 1:
+        return int(num)
+    else:
+        return round(num,2)
+
+def formalizaMat(A):
+    m, n = np.shape(A)
+    for i in range(m):
+        for j in range(n):
+            A[i][j] = formalizaNum(A[i][j])
+    
+    return A
+
+def formalizaVet(V):
+    n = len(V)
+    for i in range(n):
+        V[i] = formalizaNum(V[i])
+    
+    return V
+
+
+'''        
 def converteString(string):
   list = string.split(" ")
   list = [int(x) for x in list]
@@ -17,7 +43,7 @@ def inputMatriz(m, n):
     if np.shape(A) != (m,n):
       return "Dimensoes da matriz invalidas."
     else:
-      return A
+      return A '''
 
 def matQuad(A):
     m, n = np.shape(A)
@@ -28,13 +54,13 @@ def matQuad(A):
 def trace(A):
     m, n = np.shape(A)
 
-    if !matQuad(A):
+    if not matQuad(A):
         return "Não é possivel encontrar traço de matrizes não quadradas."
     
     for i in range(m):
         soma = soma + A[i][i]
 
-    return soma
+    return formalizaNum(soma)
 
 #IMPLEMENTACAO DA DETERMINANTE
 def subMatriz(A, lin, col):
@@ -56,7 +82,7 @@ def determinante(A):
     det = 0.0
     list_cofat = []
     m, n = np.shape(A)
-    if !matQuad(A):
+    if not matQuad(A):
         return "Não é possivel encontrar determinante de matrizes não quadradas."
 
     i = 0
@@ -72,7 +98,7 @@ def determinante(A):
             list_cofat.append(((-1)**((i+1)+(j+1))) * determinante(subMatriz(A, i, j)))
             det = (list_cofat[j] * A[i][j]) + det
 
-    return det
+    return formalizaNum(det)
 
 #IMPLEMENTACAO DA TRANSPOSTA
 def transposta(A):
@@ -95,20 +121,14 @@ def matrizCof(A):
 
 
 def inversa(A):
-    if !matQuad(A):
+    if not matQuad(A):
         return "Não é possivel encontrar a inversa de matrizes não quadradas."
-    invA = 1/np.det(A) * transposta(matrizCof(A)))
-    return invA
+    invA = 1/np.det(A) * transposta(matrizCof(A))
+    return formalizaMat(invA)
 
 #IMPLEMENTACAO POLINOMIO
 
-def formalizaNum(num):
-    if abs(num) < 0.0000001:
-        return 0
-    elif num/int(num) == 1:
-        return int(num)
-    else:
-        return round(num,2)
+
 
 def somaDiagP(A, valor):
     m,n = np.shape(A)
@@ -127,7 +147,7 @@ def stringPolinomio(coeficientes,i):
 
 def polinomio(A):
     m, n = np.shape(A)
-    if !matQuad(A):
+    if not matQuad(A):
         return "Não é possivel encontrar polinomio caracteristico de matrizes não quadradas."
     coeficientes = np.array([1.])
     auxA = np.array(A)
@@ -142,8 +162,8 @@ def polinomio(A):
 #IMPLEMENTACAO AUTOVALORES
 
 def fatorizacaoQR(A):
-    produtoQR = np.array(A)
-    m, n = produtoQR.shape
+    produtoQR = A
+    m, n = np.shape(produtoQR)
     it = 1000
     k = 0
     while k < it:
@@ -167,8 +187,8 @@ def fatorizacaoQR(A):
 
 
 def autovalores(A):
-    m, n = A.shape
-    if !matQuad(A):
+    m, n = np.shape(A)
+    if not matQuad(A):
         return "Não é possivel encontrar autovalores de matrizes não quadradas."
     listAutovalor = []
     for i in range(m):
@@ -218,7 +238,7 @@ def diagonal(A):
   
 
 def autovetores(A):
-    if !matQuad(A):
+    if not matQuad(A):
         return "Não é possivel encontrar autovetores de matrizes não quadradas."
     avals = np.linalg.eigvals(A)
     B = calcB(A)
@@ -248,121 +268,3 @@ def autovetores(A):
     return listAutovetores
   
   #Codigo Interface
-from numpy import *
-from Funcoes import *
-from functools import partial
-from tkinter import *
-
-def determinante():
-    A = array(eval(edmatriz.get()))
-    d = linalg.det(A)
-    saida["text"] = str(round(d,2))
-
-def trace():
-    A = array(eval(edmatriz.get()))
-    n = len(A)
-    saida["text"] = trace()
-
-def polinomioCarac():
-    A = array(eval(edmatriz.get()))
-    n = len(A)
-    poli = polinomio(A)
-    saida["text"] = poli
-
-def inversa():
-    a = array(eval(edmatriz.get()))
-    t = linalg.inv(a)
-    saida["text"] = t
-
-def transposta():
-    A = array(eval(edmatriz.get()))
-    n = len(A)
-    transposta(A)
-    saida["text"] = conveteString(A,n)
-
-window = Tk()
-window["bg"] = "black"
-window.title("Operações com Matrizes")
-window.geometry("1350x500+0+0")
-lb2 = Label(window, text="Insira a matriz em python",
-font="arial 20 bold", width=45, bg="orange", fg="white")
-lb2.grid(row = 0, column = 0)
-#lbaux = Label(window, font="arial 1 ", bg = "black")
-#lbaux.grid(row = 1, column = 0)
-edmatriz = Entry(window, width = 30)
-edmatriz.insert(INSERT,"")
-edmatriz.grid(row=2, column = 0)
-
-#lbaux2 = Label(window, font="arial 1 bold", bg = "black")
-#lbaux2.grid(row = 3, column = 0)
-bt = Button(window,width=19,text="Determinante", relief=GROOVE,font=" arial 12", bg =
-"orange", activebackground="green", fg="white", command = determinante)
-#bt.grid(row=4,column = 0)
-bt.place(x=250,y=103)
-#lbaux3 = Label(window, font="arial 1 bold", bg = "black")
-#lbaux3.grid(row = 5, column = 0)
-bt2 = Button(window,width=19,text="Traço", relief=GROOVE, font=" arial 12", bg = 
-"orange", activebackground="green", fg="white", command = trace)
-#bt2.grid(row=12,column=0)
-bt2.place(x=450,y=103)
-#lbaux4 = Label(window, font="arial 1 bold", bg = "black")
-#lbaux4.grid(row = 7, column = 0)
-bt3 = Button(window,width=19,text="Transposta", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white", command=transposta)
-#bt3.grid(row=6,column = 0)
-bt3.place(x=250,y=140)
-#lbaux5 = Label(window, font="arial 1 bold", bg = "black")
-#lbaux5.grid(row = 9, column = 0)
-bt4 = Button(window,width=19,text="Inversa", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white", command=inversa)
-#bt4.grid(row=14,column=0)
-bt4.place(x=450,y=139)
-#lbaux6 = Label(window, font="arial 1 bold", bg = "black")
-#lbaux6.grid(row = 11, column = 0)
-bt5 = Button(window,width=19,text="Polinômio Característico", relief=GROOVE, font=" arial 12",
-bg = "orange", activebackground="green", fg="white", command=polinomioCarac)
-#bt5.grid(row=8,column = 0)
-bt5.place(x=250,y=175)
-#lbaux7 = Label(window, font="arial 1 bold", bg = "black")
-#lbaux7.grid(row = 13, column = 0)
-bt6 = Button(window,width=19,text="Autovalores", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white")
-#bt6.grid(row=16,column=0)
-bt6.place(x=450,y=175)
-lbaux8 = Label(window, font="arial 1 bold", bg = "black")
-lbaux8.grid(row = 15, column = 0)
-bt7 = Button(window,width=19,text="Autovetores", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white")
-bt7.grid(row=10,column = 0)
-bt7.place(x=250,y=208)
-lbaux9 = Label(window, font="arial 1 bold", bg = "black")
-lbaux9.grid(row = 17, column = 0)
-bt8 = Button(window,width=19,text="Matriz Diagonal", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white")
-#bt8.grid(row=18,column=0)
-bt8.place(x=450,y=211)
-lbaux10 = Label(window, font="arial 1 bold", bg = "black")
-lbaux10.grid(row = 19, column = 0)
-
-lb2_0 = Label(window, text="Resultado", font="arial 20 bold", width=45, bg="orange",
-fg="white")
-lb2_0.grid(row = 0, column = 2)
-lbaux13 = Label(window, font="arial 1 ", bg = "black")
-lbaux13.grid(row = 1, column = 2)
-#ed2 = Entry(window, width = 30)
-#ed2.insert(INSERT, "Resultado da Operação: ")
-#ed2.grid(row=3, column = 2)
-#lbaux14 = Label(window, font="arial 1 ", bg = "black")
-#lbaux14.grid(row = 3, column = 2)
-#lbaux15 = Label(window, font="arial 12 bold", width=24, bg="orange", fg="white",
-#text="Resultado da Operação:")
-#lbaux15.grid(row = 4, column = 2)
-#lbaux16 = Label(window, font="arial 1 ", bg = "black")
-#lbaux16.grid(row = 5, column = 2)
-#lbaux17 = Label(window, font="arial 12 bold ", bg = "white",fg="white", width=40)
-#lbaux17.grid(row = 6, column = 2)
-saida = Label(font="Times 20 bold", width=40, bg = "black", fg = "white")
-saida.grid(row=3,column=2)
-
-window.maxsize(width=1520, height=800)
-window.mainloop()
