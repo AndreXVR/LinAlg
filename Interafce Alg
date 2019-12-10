@@ -38,24 +38,28 @@ def btnInversa():
 def btnPolinomio():
     A = np.array(eval(edmatriz.get()))
     retorno = polinomio(A)
-
     saida["text"] = retorno
+
 
 def btnAutovalores():
     A = np.array(eval(edmatriz.get()))
     retorno = autovalores(A)
+    saida["text"] = retorno
+    
+
+def btnAutovetores():
+    A = np.array(eval(edmatriz.get()))
+    retorno = autovetores(A)
+    saida["text"] = retorno
+
+def btnMatrizD():
+    A = np.array(eval(edmatriz.get()))
+    retorno = matrizD(A)
     if isinstance(retorno,str):
         saida["text"] = retorno
     else:
         saida["text"] = str(retorno)
 
-def btnAutovetores():
-    A = np.array(eval(edmatriz.get()))
-    retorno = autovetores(A)
-    if isinstance(retorno,str):
-        saida["text"] = retorno
-    else:
-        saida["text"] = str(retorno)
         
 
 window = Tk()
@@ -116,7 +120,7 @@ bt7.place(x=250,y=208)
 lbaux9 = Label(window, font="arial 1 bold", bg = "black")
 lbaux9.grid(row = 17, column = 0)
 bt8 = Button(window,width=19,text="Matriz Diagonal", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white", command = btnPolinomio)
+"orange", activebackground="green", fg="white", command = btnMatrizD)
 #bt8.grid(row=18,column=0)
 bt8.place(x=450,y=211)
 lbaux10 = Label(window, font="arial 1 bold", bg = "black")

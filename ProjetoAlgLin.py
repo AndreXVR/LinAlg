@@ -1,4 +1,5 @@
 import numpy as np
+from subFuncs import *
 
 #INPUT DA MATRIZ
 
@@ -52,12 +53,12 @@ def matQuad(A):
 #IMPLEMENTACAO DO TRAÇO
 
 def trace(A):
-    m, n = np.shape(A)
-
+    n = np.shape(A)[0]
+    soma = 0
     if not matQuad(A):
         return "Não é possivel encontrar traço de matrizes não quadradas."
     
-    for i in range(m):
+    for i in range(n):
         soma = soma + A[i][i]
 
     return formalizaNum(soma)
@@ -115,7 +116,7 @@ def matrizCof(A):
     cA = np.zeros((m,n),int)
     for i in range(m):
         for j in range(n):
-            cA[i][j] = ((-1)**((i+1)+(j+1))) * np.det(subMatriz(A, i, j))
+            cA[i][j] = ((-1)**((i+1)+(j+1))) * np.linalg.det(subMatriz(A, i, j))
 
     return cA
 
@@ -123,7 +124,9 @@ def matrizCof(A):
 def inversa(A):
     if not matQuad(A):
         return "Não é possivel encontrar a inversa de matrizes não quadradas."
-    invA = 1/np.det(A) * transposta(matrizCof(A))
+    if np.linalg.det(A) == 0:
+        return "Não é possivel encontrar a inversa de matrizes singulares."
+    invA = 1/np.linalg.det(A) * transposta(matrizCof(A))
     return formalizaMat(invA)
 
 #IMPLEMENTACAO POLINOMIO
@@ -188,14 +191,17 @@ def fatorizacaoQR(A):
 
 def autovalores(A):
     m, n = np.shape(A)
+    strRetorno = ""
     if not matQuad(A):
         return "Não é possivel encontrar autovalores de matrizes não quadradas."
     listAutovalor = []
     for i in range(m):
         autovalor = A[i][i]
         formalizaNum(autovalor)
-        listAutovalor.append(autovalor)
-    return listAutovalor
+        listAutovalor.append(av(A)[i])
+        strRetorno = strRetorno + str(listAutovalor[i]) + " "
+
+    return strRetorno
 
 #IMPLEMENTACAO AUTOVETORES
 
@@ -238,6 +244,7 @@ def diagonal(A):
   
 
 def autovetores(A):
+    strRetorno = ""
     if not matQuad(A):
         return "Não é possivel encontrar autovetores de matrizes não quadradas."
     avals = np.linalg.eigvals(A)
@@ -249,22 +256,37 @@ def autovetores(A):
     cont = 0
     k = 0
     listAutovetores = []
-    if diagonal(A):
-      for i in range(m):
-        listAutovetores.append(id[i][:])
-    else:
-      while cont != numAvals:
-          u = np.array(kColuna(id, k))
-          for j in range(numBs):
-              u = ((avals[cont]*u) + np.array(kColuna(B[j], k)))
-          if verifVet(u) == 0:
-              k+=1
-              u = np.array(kColuna(id, k))
-          else:
-              listAutovetores.append(u)
-              cont+=1
-              k = 0
+    for i in range(m):
+        listAutovetores.append((formalizaNum(ave(A)[0][i]),formalizaVet(ave(A)[1][i])))
+        strRetorno = strRetorno +chr(955)+'='+str(listAutovetores[i][0]) +" "+str(listAutovetores[i][1])+'\n'
+    while cont != numAvals:
+        u = np.array(kColuna(id, k))
+        for j in range(numBs):
+            u = ((avals[cont]*u) + np.array(kColuna(B[j], k)))
+        if verifVet(u) == 0:
+            k+=1
+            u = np.array(kColuna(id, k))
+        else:
+            cont+=1
+            k = 0
     
-    return listAutovetores
+    return strRetorno
+
+def matrizD(A):
+    if not matQuad(A):
+        return "Não é possivel encontrar matriz diagonal de matrizes não quadradas."
+
+    n = np.shape(A)[0]
+    if len(np.linalg.eigvals(A)) != n:
+        return "A matriz é defectiva"
+
+    D = np.zeros((n,n),int)
+    for i in range(n):
+        D[i][i] = formalizaNum(np.linalg.eigvals[i])
+        
+    return D
+            
+
+
   
   #Codigo Interface
