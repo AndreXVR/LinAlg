@@ -4,7 +4,7 @@ from functools import partial
 from tkinter import *
 
 def btnTrace():
-    A = np.array(eval(edmatriz.get()))
+    A = inputMatriz(edmatriz.get())
     retorno = trace(A)
     if isinstance(retorno,str):
         saida["text"] = retorno
@@ -12,7 +12,7 @@ def btnTrace():
         saida["text"] = str(retorno)
 
 def btnDeterminante():
-    A = np.array(eval(edmatriz.get()))
+    A = inputMatriz(edmatriz.get())
     retorno = determinante(A)
     if isinstance(retorno,str):
         saida["text"] = retorno
@@ -20,7 +20,7 @@ def btnDeterminante():
         saida["text"] = str(retorno)
 
 def btnTransposta():
-    A = np.array(eval(edmatriz.get()))
+    A = inputMatriz(edmatriz.get())
     retorno = transposta(A)
     if isinstance(retorno,str):
         saida["text"] = retorno
@@ -28,7 +28,7 @@ def btnTransposta():
         saida["text"] = str(retorno)
 
 def btnInversa():
-    A = np.array(eval(edmatriz.get()))
+    A = inputMatriz(edmatriz.get())
     retorno = inversa(A)
     if isinstance(retorno,str):
         saida["text"] = retorno
@@ -36,24 +36,24 @@ def btnInversa():
         saida["text"] = str(retorno)
 
 def btnPolinomio():
-    A = np.array(eval(edmatriz.get()))
+    A = inputMatriz(edmatriz.get())
     retorno = polinomio(A)
     saida["text"] = retorno
 
 
 def btnAutovalores():
-    A = np.array(eval(edmatriz.get()))
+    A = inputMatriz(edmatriz.get())
     retorno = autovalores(A)
     saida["text"] = retorno
     
 
 def btnAutovetores():
-    A = np.array(eval(edmatriz.get()))
+    A = inputMatriz(edmatriz.get())
     retorno = autovetores(A)
     saida["text"] = retorno
 
 def btnMatrizD():
-    A = np.array(eval(edmatriz.get()))
+    A = inputMatriz(edmatriz.get())
     retorno = matrizD(A)
     if isinstance(retorno,str):
         saida["text"] = retorno
@@ -63,88 +63,66 @@ def btnMatrizD():
         
 
 window = Tk()
-window["bg"] = "black"
+window["bg"] = "#2a2a2a"
 window.title("Operações com Matrizes")
-window.geometry("1350x500+0+0")
+window.geometry("20000x650+0+0")
 lb2 = Label(window, text="Insira a matriz em python",
-font="arial 20 bold", width=45, bg="orange", fg="white")
+font="arial 20 bold", width=45, bg="dark blue", fg="white")
 lb2.grid(row = 0, column = 0)
-#lbaux = Label(window, font="arial 1 ", bg = "black")
-#lbaux.grid(row = 1, column = 0)
-edmatriz = Entry(window, width = 30)
-edmatriz.insert(INSERT,"")
-edmatriz.grid(row=2, column = 0)
 
-#lbaux2 = Label(window, font="arial 1 bold", bg = "black")
-#lbaux2.grid(row = 3, column = 0)
+edmatriz = Entry(window, width = 40)
+edmatriz.insert(INSERT,"")
+#edmatriz.grid(row=2, column = 0)
+edmatriz.place(x=300,y=60)
+
+
 bt = Button(window,width=19,text="Determinante", relief=GROOVE,font=" arial 12", bg =
-"orange", activebackground="green", fg="white", command = btnDeterminante)
-#bt.grid(row=4,column = 0)
+"dark blue", activebackground="light blue", fg="white", command = btnDeterminante)
+
 bt.place(x=250,y=103)
-#lbaux3 = Label(window, font="arial 1 bold", bg = "black")
-#lbaux3.grid(row = 5, column = 0)
+
 bt2 = Button(window,width=19,text="Traço", relief=GROOVE, font=" arial 12", bg = 
-"orange", activebackground="green", fg="white", command = btnTrace)
-#bt2.grid(row=12,column=0)
+"dark blue", activebackground="light blue", fg="white", command = btnTrace)
+
 bt2.place(x=450,y=103)
-#lbaux4 = Label(window, font="arial 1 bold", bg = "black")
-#lbaux4.grid(row = 7, column = 0)
+
 bt3 = Button(window,width=19,text="Transposta", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white", command = btnTransposta)
-#bt3.grid(row=6,column = 0)
+"dark blue", activebackground="light blue", fg="white", command = btnTransposta)
+
 bt3.place(x=250,y=140)
-#lbaux5 = Label(window, font="arial 1 bold", bg = "black")
-#lbaux5.grid(row = 9, column = 0)
+
 bt4 = Button(window,width=19,text="Inversa", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white", command = btnInversa)
-#bt4.grid(row=14,column=0)
+"dark blue", activebackground="light blue", fg="white", command = btnInversa)
+
 bt4.place(x=450,y=139)
-#lbaux6 = Label(window, font="arial 1 bold", bg = "black")
-#lbaux6.grid(row = 11, column = 0)
+
 bt5 = Button(window,width=19,text="Polinômio Característico", relief=GROOVE, font=" arial 12",
-bg = "orange", activebackground="green", fg="white", command = btnPolinomio)
-#bt5.grid(row=8,column = 0)
+bg = "dark blue", activebackground="light blue", fg="white", command = btnPolinomio)
+
 bt5.place(x=250,y=175)
-#lbaux7 = Label(window, font="arial 1 bold", bg = "black")
-#lbaux7.grid(row = 13, column = 0)
+
 bt6 = Button(window,width=19,text="Autovalores", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white", command = btnAutovalores)
-#bt6.grid(row=16,column=0)
+"dark blue", activebackground="light blue", fg="white", command = btnAutovalores)
+
 bt6.place(x=450,y=175)
-lbaux8 = Label(window, font="arial 1 bold", bg = "black")
-lbaux8.grid(row = 15, column = 0)
+
 bt7 = Button(window,width=19,text="Autovetores", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white", command = btnAutovetores)
+"dark blue", activebackground="light blue", fg="white", command = btnAutovetores)
 bt7.grid(row=10,column = 0)
 bt7.place(x=250,y=208)
-lbaux9 = Label(window, font="arial 1 bold", bg = "black")
-lbaux9.grid(row = 17, column = 0)
-bt8 = Button(window,width=19,text="Matriz Diagonal", relief=GROOVE, font=" arial 12", bg =
-"orange", activebackground="green", fg="white", command = btnMatrizD)
-#bt8.grid(row=18,column=0)
-bt8.place(x=450,y=211)
-lbaux10 = Label(window, font="arial 1 bold", bg = "black")
-lbaux10.grid(row = 19, column = 0)
 
-lb2_0 = Label(window, text="Resultado", font="arial 20 bold", width=45, bg="orange",
+bt8 = Button(window,width=19,text="Matriz Diagonal", relief=GROOVE, font=" arial 12", bg =
+"dark blue", activebackground="light blue", fg="white", command = btnMatrizD)
+
+bt8.place(x=450,y=211)
+
+
+lb2_0 = Label(window, text="Resultado", font="arial 20 bold", width=100, bg="dark blue",
 fg="white")
 lb2_0.grid(row = 0, column = 2)
-lbaux13 = Label(window, font="arial 1 ", bg = "black")
-lbaux13.grid(row = 1, column = 2)
-#ed2 = Entry(window, width = 30)
-#ed2.insert(INSERT, "Resultado da Operação: ")
-#ed2.grid(row=3, column = 2)
-#lbaux14 = Label(window, font="arial 1 ", bg = "black")
-#lbaux14.grid(row = 3, column = 2)
-#lbaux15 = Label(window, font="arial 12 bold", width=24, bg="orange", fg="white",
-#text="Resultado da Operação:")
-#lbaux15.grid(row = 4, column = 2)
-#lbaux16 = Label(window, font="arial 1 ", bg = "black")
-#lbaux16.grid(row = 5, column = 2)
-#lbaux17 = Label(window, font="arial 12 bold ", bg = "white",fg="white", width=40)
-#lbaux17.grid(row = 6, column = 2)
-saida = Label(font="Times 20 bold", width=40, bg = "black", fg = "white")
+
+saida = Label(font="Times 20 bold", width=60, bg = "#2a2a2a", fg = "white")
 saida.grid(row=3,column=2)
 
-window.maxsize(width=1520, height=800)
+
 window.mainloop()
