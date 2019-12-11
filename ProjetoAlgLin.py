@@ -1,15 +1,21 @@
 import numpy as np
-from subFuncs import *
+from SubFunc import *
 
 #INPUT DA MATRIZ
 
 def formalizaNum(num):
-    if abs(num) < 0.0000001:
-        return 0
-    elif num/int(num) == 1:
-        return int(num)
+    if int(num)!=0:
+        if abs(num) < 0.00001:
+            return 0
+        elif num/int(num) == 1:
+            return int(num)
+        else:
+            return round(num,2)
     else:
-        return round(num,2)
+        if abs(num) < 0.00001:
+            return 0
+        else:
+            return round(num,2)
 
 def formalizaMat(A):
     m, n = np.shape(A)
@@ -26,25 +32,32 @@ def formalizaVet(V):
     
     return V
 
-
-'''        
-def converteString(string):
-  list = string.split(" ")
-  list = [int(x) for x in list]
-  return list
-  
-def inputMatriz(m, n):
-    A = [] 
-    for i in range(m):
-        lin = input()
-        lin = converteString(lin)
-        A.append(lin)
+def converttoNum(string):
+    list = []
+    for i in range(len(string)):
+        list.append(int(string[i]))
     
+    return list
+
+  
+def inputMatriz(string):
+    A = []
+    lin = []
+    cont = 0
+    list = string.split(" ")
+    list = converttoNum(list)
+    n = len(list)
+    m = int(n**(1/2))
+    for i in range(m):
+        lin = []
+        for j in range(m):
+            lin.append(list[j+cont])
+
+        cont = cont + m
+        A.append(lin)
+            
     A = np.array(A)
-    if np.shape(A) != (m,n):
-      return "Dimensoes da matriz invalidas."
-    else:
-      return A '''
+    return A 
 
 def matQuad(A):
     m, n = np.shape(A)
@@ -123,9 +136,9 @@ def matrizCof(A):
 
 def inversa(A):
     if not matQuad(A):
-        return "Não é possivel encontrar a inversa de matrizes não quadradas."
+        return "Impossivel com matriz não quadrada."
     if np.linalg.det(A) == 0:
-        return "Não é possivel encontrar a inversa de matrizes singulares."
+        return "Impossivel com matriz singular"
     invA = 1/np.linalg.det(A) * transposta(matrizCof(A))
     return formalizaMat(invA)
 
@@ -198,8 +211,8 @@ def autovalores(A):
     for i in range(m):
         autovalor = A[i][i]
         formalizaNum(autovalor)
-        listAutovalor.append(av(A)[i])
-        strRetorno = strRetorno + str(listAutovalor[i]) + " "
+        listAutovalor.append(formalizaNum(av(A)[i]))
+        strRetorno = strRetorno +chr(955)+" = " + str(listAutovalor[i]) + "\n"
 
     return strRetorno
 
@@ -282,11 +295,9 @@ def matrizD(A):
 
     D = np.zeros((n,n),int)
     for i in range(n):
-        D[i][i] = formalizaNum(np.linalg.eigvals[i])
+        D[i][i] = formalizaNum(np.linalg.eigvals(A)[i])
         
     return D
             
 
 
-  
-  #Codigo Interface
